@@ -1,0 +1,3 @@
+$(() => {
+    new TodoListController($('#root'));
+});
