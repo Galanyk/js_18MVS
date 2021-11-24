@@ -35,24 +35,36 @@ class TodoListModel {
                 this.todoListItems = this.todoListItems.filter((i) => i.id !== +id);
                 // console.log(this.todoListItems[0].id);
                 return Promise.resolve(id);
-            })
+            });
     };
 
     editItem(id) {
-            return fetch(this.url + "/" + id, { method: 'PUT' })
-                .then((r) => {
-                    this.todoListItems = this.todoListItems.filter((i) => i.id === +id);
-                    // this.createEditHtml()
-                    // console.log(this.todoListItems[0].id);
-                    // return Promise.resolve(id);
-                })
+        return fetch(this.url + "/" + id, { method: 'PUT' })
+            .then((r) => {
+                this.todoListItems = this.todoListItems.filter((i) => i.id === +id);
+                // this.createEditHtml()
+                // console.log(this.todoListItems[0].id);
+                // return Promise.resolve(id);
+            });
+    };
+
+    enterUserNew(userData) {
+        // console.log('ToDoListModel: 52: Click Enter');
+        const foo = {
+            name: ` ${ userData }`
         }
-        // createEditHtml(user, $container) {
-        //     return `<li contenteditable="true" class=" ${TodoListView.ITEM}">AAAA</li>
-        //     <li contenteditable="true" class=" ${TodoListView.ITEM}">Adress: Odessa</li>`;
 
-    //     $container.append(this.$ListContainerEl);
+        return fetch(this.url + "/", { method: 'POST' })
+            .then((r) => {
+                this.todoListItems.push(foo)
+                    // this.createEditHtml()
 
-    // }
+                // this.todoListItems.push(foo)
+                // console.log(this.todoListItems);
+                // return Promise.resolve(id);
+            });
+    };
+
+
 
 }

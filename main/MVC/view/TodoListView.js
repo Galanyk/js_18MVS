@@ -3,52 +3,39 @@ class TodoListView {
         BUTTON_NEW_USER: 'button-input',
         BUTTON_EDIT: 'button-edit',
         BUTTON_DEL: 'button-del',
+        BUTTON_SAVE: 'button-save',
     };
-
-    static ITEM = 'item'
+    input = null
+    inputNameEl = document.querySelector('user-name');
+    static INPUT = 'input'
     constructor(options) {
         this.options = options;
 
         this.$ListContainerEl =
             this.initView()
             .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_DEL}`, (e) => this.onDeleteClick(e))
-            .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_EDIT}`, (e) => this.onEditClick(e))
-
-        // this.$ListContainerEl.append();
-
-
+            .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_EDIT}`, (e) => this.onEditClick(e));
+        // .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e)))
     };
 
     initView() {
         return $(`<ul></ul>`);
     };
 
-    initDiv() {
-        console.log('add div');
-        return $(`<div></div>`);
-    };
-
     renderList(list) {
         const listHtml = list.map(item => this.createItemHtml(item)).join('');
         this.$ListContainerEl.html(listHtml)
-
     };
-
-    // renderInput(input) {
-    //     const inputHtml = list.map(input => this.createInputHtml(input)).join('');
-    //     this.$ListContainerEl.html(inputHtml)
-    //     console.log(inputHtml)
-    // };
 
     renderEdit(user) {
         const editHtml = this.createEditHtml(user)
         this.$ListContainerEl.html(editHtml)
         console.log(editHtml)
-    }
+    };
 
     appendTo($container) {
         $container.append(this.$ListContainerEl);
-    }
+    };
 
     createItemHtml(item) {
         return `<li class=" ${TodoListView.ITEM}">${item.name}</li>
@@ -56,14 +43,16 @@ class TodoListView {
         <button id="${item.id}" class="${TodoListView.BUTTON_CLASS.BUTTON_DEL}">Delete</button>`;
     };
 
-    createEditHtml(item) {
-        return `<li contenteditable="true" class=" ${TodoListView.ITEM}">${item}</li>
-        <li contenteditable="true" class=" ${TodoListView.ITEM}">Adress: Odessa</li>`
-    }
+    // createEditHtml(item) {
+    //     return `<li contenteditable="true" class=" ${TodoListView.ITEM}">${item}</li>
+    //     <li contenteditable="true" class=" ${TodoListView.ITEM}">Adress: Odessa</li>
+    //     <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
+    // }
 
     createUserCreateContainer($container) {
-        const el = `<div><input id="user-name" type="text" placeholder="Name">
-        <button  class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`;
+        const el = $(`<div><input id="user-name" class="${TodoListView.INPUT}" type="text" placeholder="Name">
+        <button id="button-input" class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`)
+            .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e))
         $container.prepend(el);
     };
 
@@ -73,10 +62,13 @@ class TodoListView {
 
     onEditClick(e) {
         this.options.onEdit(e.target.id);
-        console.log(e.target.id)
-    }
+    };
+
+    onEnterClick(e) {
+        this.options.onEnter($(`${TodoListView.INPUT}`).val());
+    };
 
     removeElement(id) {
         this.$ListContainerEl.find(`#${id }`).remove();
-    }
+    };
 }
