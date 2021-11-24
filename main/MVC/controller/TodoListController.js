@@ -22,6 +22,9 @@ class TodoListController {
             onEdit: (id) => this.editListItem(id),
         });
         this.todoListModel.getListItems().then(() => this.initViewRender());
+
+
+
         /*видим посты*/
 
     }
@@ -29,6 +32,7 @@ class TodoListController {
     initViewRender() {
         this.todoListView.renderList(this.todoListModel.getTodoListItems())
         this.todoListView.appendTo(this.$container);
+        this.todoListView.createUserCreateContainer(this.$container);
     }
 
     deleteListItem(id) {
@@ -42,6 +46,8 @@ class TodoListController {
         this.todoListModel.editItem(id).then((r) => {
             this.initViewRender()
                 // this.todoListView.removeElement(id)
+            this.todoListView.renderEdit(this.todoListModel.getDataUser())
+
         })
     }
 }

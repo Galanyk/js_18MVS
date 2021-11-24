@@ -14,13 +14,12 @@ class TodoListView {
             .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_DEL}`, (e) => this.onDeleteClick(e))
             .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_EDIT}`, (e) => this.onEditClick(e))
 
-        this.$ListContainerEl.append();
+        // this.$ListContainerEl.append();
 
 
     };
 
     initView() {
-        console.log('add url');
         return $(`<ul></ul>`);
     };
 
@@ -32,13 +31,20 @@ class TodoListView {
     renderList(list) {
         const listHtml = list.map(item => this.createItemHtml(item)).join('');
         this.$ListContainerEl.html(listHtml)
+
     };
 
-    renderInput(input) {
-        const inputHtml = list.map(input => this.createInputHtml(input)).join('');
-        this.$ListContainerEl.html(inputHtml)
-        console.log(inputHtml)
-    };
+    // renderInput(input) {
+    //     const inputHtml = list.map(input => this.createInputHtml(input)).join('');
+    //     this.$ListContainerEl.html(inputHtml)
+    //     console.log(inputHtml)
+    // };
+
+    renderEdit(user) {
+        const editHtml = this.createEditHtml(user)
+        this.$ListContainerEl.html(editHtml)
+        console.log(editHtml)
+    }
 
     appendTo($container) {
         $container.append(this.$ListContainerEl);
@@ -50,9 +56,15 @@ class TodoListView {
         <button id="${item.id}" class="${TodoListView.BUTTON_CLASS.BUTTON_DEL}">Delete</button>`;
     };
 
-    createInputHtml(item) {
-        return `<input type="text" placeholder="Name">
-        <button  class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button>`
+    createEditHtml(item) {
+        return `<li contenteditable="true" class=" ${TodoListView.ITEM}">${item}</li>
+        <li contenteditable="true" class=" ${TodoListView.ITEM}">Adress: Odessa</li>`
+    }
+
+    createUserCreateContainer($container) {
+        const el = `<div><input id="user-name" type="text" placeholder="Name">
+        <button  class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`;
+        $container.prepend(el);
     };
 
     onDeleteClick(e) {
