@@ -30,7 +30,13 @@ class TodoListView {
     renderEdit(user) {
         const editHtml = this.createEditHtml(user)
         this.$ListContainerEl.html(editHtml)
-        console.log(editHtml)
+            // console.log(editHtml)
+    };
+
+    renderEnter(list) {
+        const enterHtml = this.createNewUserContainer(list)
+        this.$ListContainerEl.html(enterHtml)
+            // console.log(enterHtml)
     };
 
     appendTo($container) {
@@ -43,17 +49,27 @@ class TodoListView {
         <button id="${item.id}" class="${TodoListView.BUTTON_CLASS.BUTTON_DEL}">Delete</button>`;
     };
 
-    // createEditHtml(item) {
-    //     return `<li contenteditable="true" class=" ${TodoListView.ITEM}">${item}</li>
-    //     <li contenteditable="true" class=" ${TodoListView.ITEM}">Adress: Odessa</li>
-    //     <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
-    // }
+    createEditHtml(item) {
+        return `<li contenteditable="true" class=" ${TodoListView.ITEM}">${item}</li>
+        <li contenteditable="true" class=" ${TodoListView.ITEM}">Adress: Odessa</li>
+        <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
+    }
 
     createUserCreateContainer($container) {
         const el = $(`<div><input id="user-name" class="${TodoListView.INPUT}" type="text" placeholder="Name">
         <button id="button-input" class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`)
             .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e))
         $container.prepend(el);
+    };
+
+    createNewUserContainer($container) {
+        const element = $(`<div><li>User Name : $(${TodoListView.INPUT}).val()</li>
+        <li>Adress: Odessa</li>
+        <li>Compani: "Mylti-treyd"</li>`)
+
+        // <button id="button-input" class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`)
+        //     .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e))
+        // $container.prepend(element);
     };
 
     onDeleteClick(e) {
@@ -66,6 +82,12 @@ class TodoListView {
 
     onEnterClick(e) {
         this.options.onEnter($(`${TodoListView.INPUT}`).val());
+        $(`${TodoListView.INPUT}`).val('')
+        const foo = {
+            name: ` name`,
+            id: 'id'
+        }
+        this.createItemHtml(foo)
     };
 
     removeElement(id) {

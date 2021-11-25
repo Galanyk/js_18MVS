@@ -30,13 +30,14 @@ class TodoListController {
     initViewRender() {
         this.todoListView.renderList(this.todoListModel.getTodoListItems())
         this.todoListView.appendTo(this.$container);
+        this.todoListView.createNewUserContainer(this.$container)
 
     }
 
     deleteListItem(id) {
         this.todoListModel.deleteItem(id).then((r) => {
             this.initViewRender()
-                // this.todoListView.removeElement(id)
+            this.todoListView.removeElement(id)
         })
     }
 
@@ -52,8 +53,11 @@ class TodoListController {
     enterUser(id) {
         this.todoListModel.enterUserNew(id).then((r) => {
             this.initViewRender()
-                // this.todoListView.removeElement(id)
-                // this.todoListView.renderEdit(this.todoListModel.getDataUser())
+            this.todoListView.createNewUserContainer()
+                // console.log(createNewUserContainer())
+
+            // this.todoListView.removeElement(id)
+            this.todoListView.renderEnter(this.todoListModel)
 
         })
     }
