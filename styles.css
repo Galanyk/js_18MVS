@@ -1,3 +1,11 @@
-.done {
-    background-color: aqua;
+.open {
+    display: flex;
+}
+
+.container_user {
+    display: none;
+}
+
+.container_user_open {
+    display: block;
 }

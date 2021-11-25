@@ -25,7 +25,7 @@ class TodoListModel {
     };
 
     getDataUser(data) {
-        console.log(data)
+        // console.log(data)
         this.todoListItems = data;
     }
 
@@ -39,12 +39,22 @@ class TodoListModel {
     };
 
     editItem(id) {
+        // const item = this.todoListItems.find((e) => e.id === +id);
+        // item.completed = !item.completed;
+        // this.todoListItems = this.todoListItems.map((e) => {
+        //     if (e.id === id) {
+        //         return item;
+        //     }
+        //     return e;
+        // })
+
+
         return fetch(this.url + "/" + id, { method: 'PUT' })
             .then((r) => {
                 this.todoListItems = this.todoListItems.filter((i) => i.id === +id);
                 // this.createEditHtml()
                 // console.log(this.todoListItems[0].id);
-                // return Promise.resolve(id);
+                return Promise.resolve(id);
             });
     };
 
@@ -65,6 +75,8 @@ class TodoListModel {
             });
     };
 
-
+    createNewUser(newUser) {
+        console.log('model create new user', newUser);
+    }
 
 }

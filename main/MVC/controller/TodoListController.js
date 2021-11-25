@@ -21,16 +21,19 @@ class TodoListController {
             onDelete: (id) => this.deleteListItem(id),
             onEdit: (id) => this.editListItem(id),
             onEnter: (id) => this.enterUser(id),
+            onNewUser: (user) => this.getNewUser(user),
 
         });
         this.todoListModel.getListItems().then(() => this.initViewRender());
+
+        // this.todoListView.createNewUserContainer(this.$container)
         this.todoListView.createUserCreateContainer(this.$container)
     }
 
     initViewRender() {
         this.todoListView.renderList(this.todoListModel.getTodoListItems())
         this.todoListView.appendTo(this.$container);
-        this.todoListView.createNewUserContainer(this.$container)
+        // this.todoListView.createNewUserContainer(this.$container)
 
     }
 
@@ -53,12 +56,18 @@ class TodoListController {
     enterUser(id) {
         this.todoListModel.enterUserNew(id).then((r) => {
             this.initViewRender()
-            this.todoListView.createNewUserContainer()
+            this.todoListView.createNewUserContainer($('container_user').toggleClass(`${TodoListView.CONTAINER_USER_OPEN}`))
+                // $(`'${TodoListView.CONTAINER_USER}'`).toggleClass(`'${TodoListView.CONTAINER_USER_OPEN}'`)
                 // console.log(createNewUserContainer())
 
             // this.todoListView.removeElement(id)
             this.todoListView.renderEnter(this.todoListModel)
 
         })
+    }
+
+    getNewUser(newUser) {
+        console.log('controler name: ', newUser);
+        this.todoListModel.createNewUser(newUser);
     }
 }
