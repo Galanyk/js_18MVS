@@ -6,6 +6,11 @@
     display: none;
 }
 
-.container_user_open {
-    display: block;
+.hide_enter_panel {
+    display: none;
 }
+
+
+/* .container_user_open {
+    display: block;
+} */

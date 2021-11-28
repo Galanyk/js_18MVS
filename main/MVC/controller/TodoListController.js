@@ -4,13 +4,6 @@ class TodoListController {
         USERS: {
             getUsers: "/users",
         },
-        POSTS: {
-            getPosts: "/posts",
-        },
-        TODOS: {
-            getTodos: "/todos"
-        }
-
     };
 
     constructor($container) {
@@ -20,54 +13,36 @@ class TodoListController {
         this.todoListView = new TodoListView({
             onDelete: (id) => this.deleteListItem(id),
             onEdit: (id) => this.editListItem(id),
-            onEnter: (id) => this.enterUser(id),
-            onNewUser: (user) => this.getNewUser(user),
-
+            onAddNewUser: (user) => this.addNewUser(user),
+            onEditSave: (user) => this.editSave(user),
         });
         this.todoListModel.getListItems().then(() => this.initViewRender());
-
-        // this.todoListView.createNewUserContainer(this.$container)
-        this.todoListView.createUserCreateContainer(this.$container)
-    }
+        this.todoListView.createUserCreateContainer(this.$container);
+    };
 
     initViewRender() {
-        this.todoListView.renderList(this.todoListModel.getTodoListItems())
+        this.todoListView.renderList(this.todoListModel.getTodoListItems());
         this.todoListView.appendTo(this.$container);
-        // this.todoListView.createNewUserContainer(this.$container)
-
-    }
+    };
 
     deleteListItem(id) {
         this.todoListModel.deleteItem(id).then((r) => {
-            this.initViewRender()
-            this.todoListView.removeElement(id)
-        })
-    }
+            this.initViewRender();
+            this.todoListView.removeElement(id);
+        });
+    };
+
+    editSave(user) {
+        this.todoListModel.editSave(user);
+        this.todoListView.renderList(this.todoListModel.getTodoListItems());
+    };
 
     editListItem(id) {
-        this.todoListModel.editItem(id).then((r) => {
-            this.initViewRender()
-                // this.todoListView.removeElement(id)
-            this.todoListView.renderEdit(this.todoListModel.getDataUser())
+        return this.todoListModel.editItem(id);
+    };
 
-        })
-    }
-
-    enterUser(id) {
-        this.todoListModel.enterUserNew(id).then((r) => {
-            this.initViewRender()
-            this.todoListView.createNewUserContainer($('container_user').toggleClass(`${TodoListView.CONTAINER_USER_OPEN}`))
-                // $(`'${TodoListView.CONTAINER_USER}'`).toggleClass(`'${TodoListView.CONTAINER_USER_OPEN}'`)
-                // console.log(createNewUserContainer())
-
-            // this.todoListView.removeElement(id)
-            this.todoListView.renderEnter(this.todoListModel)
-
-        })
-    }
-
-    getNewUser(newUser) {
-        console.log('controler name: ', newUser);
-        this.todoListModel.createNewUser(newUser);
-    }
+    addNewUser(newUser) {
+        this.todoListModel.addNewUser(newUser);
+        this.todoListView.renderList(this.todoListModel.getTodoListItems());
+    };
 }
