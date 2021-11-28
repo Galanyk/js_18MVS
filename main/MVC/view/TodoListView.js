@@ -10,13 +10,14 @@ class TodoListView {
     newUser = null;
 
     static INPUT = 'input'
+    static LIST = 'list'
     static CONTAINER_INPUT = 'container_input'
     static ITEM = 'item'
     static CONTAINER_USER = 'container_user'
     static CONTAINER_USER_OPEN = 'container_user_open'
+
     constructor(options) {
         this.options = options;
-
         this.$ListContainerEl =
             this.initView()
             .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_DEL}`, (e) => this.onDeleteClick(e))
@@ -26,7 +27,7 @@ class TodoListView {
     };
 
     initView() {
-        return $(`<ul class="li"></ul>`);
+        return $(`<ul class="${TodoListView.LIST}"></ul>`);
     };
 
     renderList(list) {
@@ -35,8 +36,8 @@ class TodoListView {
     };
 
     renderEdit(list) {
-        const editHtml = this.createEditHtml(list)
-        this.$ListContainerEl.html(editHtml)
+        const editHtml = this.createEditHtml(list);
+        this.$ListContainerEl.html(editHtml);
     };
 
     appendTo($container) {
@@ -51,26 +52,27 @@ class TodoListView {
 
     createEditHtml(item) {
         console.log('Phone:', item.phone);
-        return `<li id=${item.id} class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Name:${item.name}</li>
+        return `<li id=${item.id} class="${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Name:${item.name}</li>
         <li class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${item.address.city}</li>
         <li class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${item.phone}</li>
         <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
     };
 
     createUserCreateContainer($container) {
-        const el = $(`<div class="${TodoListView.CONTAINER_INPUT}"><input id="user-name" class="${TodoListView.INPUT}" type="text" placeholder="Name">
+        const el = $(`<div class="${TodoListView.CONTAINER_INPUT}">
+        <input id="user-name" class="${TodoListView.INPUT}" type="text" placeholder="Name">
         <button id="button-input" class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`)
-            .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e))
+            .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e));
         $container.prepend(el);
     };
 
     createNewUserContainer($container) {
         const name = $(TodoListView.INPUT).val();
         this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}">
-        <li contenteditable="true">name:${name} </li>
+        <li class=" ${TodoListView.ITEM}" contenteditable="true">name:${name} </li>
         <li class=" ${TodoListView.ITEM}" contenteditable="true">Address: </li>
         <li class=" ${TodoListView.ITEM}" contenteditable="true">Phone: </li>
-        <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`)
+        <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
         $($container).prepend(this.newUser);
     };
 
@@ -88,28 +90,27 @@ class TodoListView {
         this.isEnter = false;
         const el = this.options.onEdit(e.target.id);
         this.renderEdit(el);
-        $('div.container_input').toggleClass('container_user');
+        $(`div.${TodoListView.CONTAINER_INPUT}`).toggleClass(TodoListView.CONTAINER_USER);
     };
 
     onEditSave(e) {
-        console.log('View edit save', this.$ListContainerEl[0]);
         this.isEnter = true;
         this.options.onEditSave(this.$ListContainerEl)
-        $('div.container_input').toggleClass('container_user');
-    }
+        $(`div.${TodoListView.CONTAINER_INPUT}`).toggleClass(TodoListView.CONTAINER_USER);
+    };
 
     onEnterClick(e) {
-        if (!this.isEnter) {
-            return
-        }
-        this.createNewUserContainer(this.$ListContainerEl);
-        $(TodoListView.INPUT).val('');
-        this.isEnter = false;
+
+        if (this.isEnter && $(TodoListView.INPUT).val().length !== 0) {
+            this.createNewUserContainer(this.$ListContainerEl);
+            $(TodoListView.INPUT).val('');
+            this.isEnter = false;
+        };
     };
 
     onSaveNewUser(e) {
         this.options.onAddNewUser(this.newUser);
-        this.newUser.toggleClass('container_user');
+        this.newUser.toggleClass(TodoListView.CONTAINER_USER);
         this.newUser.remove();
         this.isEnter = true;
     };

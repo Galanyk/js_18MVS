@@ -1,16 +1,44 @@
-.open {
+.hide_enter_panel {
+    display: none;
+}
+
+.item {
+    list-style-type: none;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 200px;
+}
+
+.list {
     display: flex;
+    width: 350px;
+    flex-wrap: wrap;
 }
 
 .container_user {
     display: none;
 }
 
-.hide_enter_panel {
-    display: none;
+.container_user_open {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 250px;
 }
 
+.button-saveNewUser {
+    width: 70px;
+}
 
-/* .container_user_open {
-    display: block;
-} */
+.button-edit {
+    width: 70px;
+    margin-right: 10px;
+}
+
+.button-del {
+    width: 70px;
+}
+
+.button-save {
+    width: 100px;
+    margin-left: 60px;
+}
