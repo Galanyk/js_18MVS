@@ -51,7 +51,6 @@ class TodoListView {
     };
 
     createEditHtml(item) {
-        console.log('Phone:', item.phone);
         return `<li id=${item.id} class="${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Name:${item.name}</li>
         <li class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${item.address.city}</li>
         <li class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${item.phone}</li>
