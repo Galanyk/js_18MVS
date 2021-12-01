@@ -19,11 +19,13 @@
     display: none;
 }
 
+
+/* 
 .container_user_open {
     display: inline-flex;
     flex-wrap: wrap;
     width: 250px;
-}
+} */
 
 .button-saveNewUser {
     width: 70px;

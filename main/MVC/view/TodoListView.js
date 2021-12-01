@@ -65,15 +65,39 @@ class TodoListView {
         $container.prepend(el);
     };
 
+    // createNewUserContainer($container) {
+    //     const name = $(TodoListView.INPUT).val();
+    //     this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}">
+    //     <li class=" ${TodoListView.ITEM}" contenteditable="true">name:${name} </li>
+    //     <li class=" ${TodoListView.ITEM}" contenteditable="true">Address: </li>
+    //     <li class=" ${TodoListView.ITEM}" contenteditable="true">Phone: </li>
+    //     <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
+    //     $($container).prepend(this.newUser);
+    // };
+
+    // createNewUserContainer($container) {
+    //     const name = $(TodoListView.INPUT).val();
+    //     const phone;
+    //     this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}">
+    //     name:<li id="new-user-name" type="text">${name}</li> 
+    //     Address: <input id="new-user-address" type="text">
+    //     Phon:<input id="new-user-phone" type=text>
+    //     <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
+    //     $($container).prepend(this.newUser);
+    // };
+
+
     createNewUserContainer($container) {
         const name = $(TodoListView.INPUT).val();
-        this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}">
-        <li class=" ${TodoListView.ITEM}" contenteditable="true">name:${name} </li>
-        <li class=" ${TodoListView.ITEM}" contenteditable="true">Address: </li>
-        <li class=" ${TodoListView.ITEM}" contenteditable="true">Phone: </li>
+        this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}"> 
+        <li id="new-user-name" class=" ${TodoListView.ITEM}" contenteditable="true">name:${name} </li> 
+        <li id="new-user-address" class=" ${TodoListView.ITEM}" contenteditable="true">Address: </li> 
+        <li id="new-user-phone" class=" ${TodoListView.ITEM}" contenteditable="true">Phone: </li> 
         <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
         $($container).prepend(this.newUser);
     };
+
+
 
     onDeleteClick(e) {
         if (!this.isEnter) {
@@ -100,20 +124,30 @@ class TodoListView {
 
     onEnterClick(e) {
 
-        if (this.isEnter && $(TodoListView.INPUT).val().length !== 0) {
+        if (this.isEnter) {
             this.createNewUserContainer(this.$ListContainerEl);
             $(TodoListView.INPUT).val('');
             this.isEnter = false;
         };
     };
 
-    onSaveNewUser(e) {
-        this.options.onAddNewUser(this.newUser);
-        this.newUser.toggleClass(TodoListView.CONTAINER_USER);
-        this.newUser.remove();
-        this.isEnter = true;
-    };
+    // onSaveNewUser(e) {
+    //     this.options.onAddNewUser(this.newUser);
+    //     this.newUser.toggleClass(TodoListView.CONTAINER_USER);
+    //     this.newUser.remove();
+    //     this.isEnter = true;
+    // };
 
+    onSaveNewUser(e) {
+        const name = $('#new-user-name').text().split(':')[1];
+        const address = $('#new-user-address').text().split(':')[1];
+        const phone = $('#new-user-phone').text().split(':')[1];
+        this.newUser = { name, address, phone }
+        this.options.onAddNewUser(this.newUser);
+        // this.newUser.toggleClass(TodoListView.CONTAINER_USER);
+        // this.newUser.remove();
+        //this.isEnter = true;
+    };
     removeElement(id) {
         this.$ListContainerEl.find(`#${id }`).remove();
     };

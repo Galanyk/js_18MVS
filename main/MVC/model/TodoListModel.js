@@ -43,31 +43,16 @@ class TodoListModel {
     };
 
     addNewUser(newUser) {
-        const name = newUser[0].children[0].innerHTML.split(':');
-        const address = newUser[0].children[1].innerHTML.split(':');
-        const phone = newUser[0].children[2].innerHTML.split(':');
-        console.log('user', address[1].length);
-        if (name[1].length === 1) {
+        if (!newUser.name.trim()) {
             alert('Incorrect name');
             return;
-        } else if (address[1].length === 1) {
+        } else if (!newUser.address.trim()) {
             alert('Incorrect address');
             return;
-        } else if (phone[1].length === 1) {
+        } else if (!newUser.phone.trim()) {
             alert('Incorrect phone');
             return
         };
-
-        const user = {
-            id: this.todoListItems.length + 1,
-            name: name[1],
-            address: {
-                city: address[1]
-            },
-            phone: phone[1]
-
-        };
-        this.todoListItems.push(user);
+        this.todoListItems.push(newUser);
     };
-
 }
