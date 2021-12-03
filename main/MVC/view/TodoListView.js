@@ -14,6 +14,9 @@ class TodoListView {
     static LIST = 'list'
     static CONTAINER_INPUT = 'container_input'
     static ITEM = 'item'
+    static ITEM_ADDRESS = 'item-address'
+    static ITEM_PHONE = 'item-phone'
+
     static CONTAINER_USER = 'container_user'
     static CONTAINER_USER_OPEN = 'container_user_open'
 
@@ -53,8 +56,8 @@ class TodoListView {
 
     createEditHtml(user) {
         return `<li id=${user.id} class="${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Name:${user.name}</li>
-        <li class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${user.address.city}</li>
-        <li class=" ${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${user.phone}</li>
+        <li id="user-address-edit" class=" ${TodoListView.ITEM_ADDRESS}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${user.address.city}</li>
+        <li id="user-address-phone" class=" ${TodoListView.ITEM_PHONE}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${user.phone}</li>
         <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
     };
 
@@ -69,8 +72,8 @@ class TodoListView {
     createNewUserContainer($container) {
         this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}"> 
          Name: <input type=text id="new-user-name" class=" ${TodoListView.ITEM}"> 
-         Address: <input id="new-user-address" class=" ${TodoListView.ITEM}" contenteditable="true">
-         Phone: <input id="new-user-phone" class=" ${TodoListView.ITEM}" contenteditable="true"> 
+         Address: <input id="new-user-address" class=" ${TodoListView.ITEM_ADDRESS}">
+         Phone: <input id="new-user-phone" class=" ${TodoListView.ITEM_PHONE}"> 
         <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
         $($container).prepend(this.newUser);
     };
@@ -96,11 +99,12 @@ class TodoListView {
 
     onEditSave(e) {
         //console.log('edit name: ', this.editUser.name);
-        const name = $('#new-user-name').text().split(':')[1];
-        const address = { city: this.editUser.address.city } //$('#new-user-address').text().split(':')[1] };
-        const phone = $('#new-user-phone').text().split(':')[1];
-        this.newUser = { name, address, phone }
-        console.log('edit: ', this.editUser)
+        const name = $('.item').text().split(':')[1];
+        const address = { city: this.editUser.address.city }
+            //  $('.item-address').text().split(':')[1]
+        const phone = $('.item-phone').text().split(': ')[1];
+        this.editUser = { name, address, phone }
+        console.log('edit: ', name.id)
         this.isEnter = true;
         // this.options.onEditSave(this.$ListContainerEl)
         this.options.onEditSave(this.$ListContainerEl);
@@ -116,21 +120,14 @@ class TodoListView {
         };
 
     };
-
-    // onSaveNewUser(e) {
-    //     this.options.onAddNewUser(this.newUser);
-    //     this.newUser.toggleClass(TodoListView.CONTAINER_USER);
-    //     this.newUser.remove();
-    //     this.isEnter = true;
-    // };
-
+    // { city: this.editUser.address.city } 
     onSaveNewUser(e) {
         const name = $('#new-user-name').val();
         const address = {
             city: $('#new-user-address').val()
         };
         console.log('Address: ', address.city);
-        const phone = $('#new-user-phone').val();;
+        const phone = $('#new-user-phone').val();
         this.newUser = { name, address, phone }
         this.options.onAddNewUser(this.newUser);
         this.isEnter = true;
