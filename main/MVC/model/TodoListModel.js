@@ -40,7 +40,6 @@ class TodoListModel {
         tempUser.name = user.name;
         tempUser.address.city = user.address;
         tempUser.phone = user.phone;
-
     };
 
     addNewUser(newUser) {
@@ -55,8 +54,6 @@ class TodoListModel {
             return
         };
         Object.assign(newUser, { id: this.todoListItems.length + 1, })
-            // console.log(newUser)
-
         this.todoListItems.push(newUser);
     };
 

@@ -72,14 +72,12 @@ class TodoListView {
 
     createNewUserContainer($container) {
         this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}"> 
-         Name: <input type=text id="new-user-name" class=" ${TodoListView.ITEM}"> 
-         Address: <input id="new-user-address" class=" ${TodoListView.ITEM_ADDRESS}">
-         Phone: <input id="new-user-phone" class=" ${TodoListView.ITEM_PHONE}"> 
+        <p class="text">Name:</p><input type=text id="new-user-name" class=" ${TodoListView.ITEM}"> 
+        <p class="text">Address:</p><input id="new-user-address" class=" ${TodoListView.ITEM_ADDRESS}">
+        <p class="text">Phone:</p><input id="new-user-phone" class=" ${TodoListView.ITEM_PHONE}"> 
         <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
         $($container).prepend(this.newUser);
     };
-
-
 
     onDeleteClick(e) {
         if (!this.isEnter) {
@@ -100,7 +98,6 @@ class TodoListView {
     };
 
     onEditSave(e) {
-        //console.log('edit name: ', this.editUser.name);
         const name = $('.item').text().split(':')[1];
         const address = $('.item-address').text().split(':')[1]
         const phone = $('.item-phone').text().split(': ')[1];
@@ -120,7 +117,7 @@ class TodoListView {
         };
 
     };
-    // { city: this.editUser.address.city } 
+
     onSaveNewUser(e) {
         const name = $('#new-user-name').val();
         const address = {

@@ -9,6 +9,20 @@
     width: 200px;
 }
 
+.item-address {
+    list-style-type: none;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 200px;
+}
+
+.item-phone {
+    list-style-type: none;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 200px;
+}
+
 .list {
     display: flex;
     width: 350px;
@@ -19,13 +33,12 @@
     display: none;
 }
 
-
-/* 
 .container_user_open {
-    display: inline-flex;
+    display: flex;
     flex-wrap: wrap;
-    width: 250px;
-} */
+    width: 300px;
+    justify-content: space-between;
+}
 
 .button-saveNewUser {
     width: 70px;
