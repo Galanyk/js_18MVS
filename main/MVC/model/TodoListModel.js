@@ -43,16 +43,20 @@ class TodoListModel {
     };
 
     addNewUser(newUser) {
-        if (!newUser.name.trim()) {
+        if (!newUser.name) {
             alert('Incorrect name');
             return;
-        } else if (!newUser.address.trim()) {
+        } else if (!newUser.address) {
             alert('Incorrect address');
             return;
-        } else if (!newUser.phone.trim()) {
+        } else if (!newUser.phone) {
             alert('Incorrect phone');
             return
         };
+        Object.assign(newUser, { id: this.todoListItems.length + 1, })
+            // console.log(newUser)
+
         this.todoListItems.push(newUser);
     };
+
 }
