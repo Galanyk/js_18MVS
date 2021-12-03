@@ -35,22 +35,11 @@ class TodoListModel {
         return element;
     };
 
-    // editSave(user) {
-    //     console.log('model save user: ', user[0].children[0].innerHTML);
-    //     const tempUser = this.todoListItems.find((e) => e.id === +user[0].children[0].id);
-    //     const tempName = user[0].children[0].innerHTML.split(':');
-    //     tempUser.name = tempName[1];
-    // };
     editSave(user) {
-        console.log('model save user: ', user[0].children[0].innerHTML);
-        const tempUser = this.todoListItems.find((e) => e.id === +user[0].children[0].id);
-        const tempName = user[0].children[0].innerHTML.split(':');
-        const tempAddress = user[0].children[1].innerHTML.split(':');
-        const tempPhone = user[0].children[2].innerHTML.split(':');
-
-        tempUser.name = tempName[1];
-        tempUser.address = tempAddress[2];
-        tempUser.phone = tempPhone[3];
+        const tempUser = this.todoListItems.find((e) => e.id === +user.id);
+        tempUser.name = user.name;
+        tempUser.address.city = user.address;
+        tempUser.phone = user.phone;
 
     };
 

@@ -9,6 +9,7 @@ class TodoListView {
     isEnter = true;
     newUser = null;
     editUser = null;
+    id = 0;
 
     static INPUT = 'input'
     static LIST = 'list'
@@ -56,8 +57,8 @@ class TodoListView {
 
     createEditHtml(user) {
         return `<li id=${user.id} class="${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Name:${user.name}</li>
-        <li id="user-address-edit" class=" ${TodoListView.ITEM_ADDRESS}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${user.address.city}</li>
-        <li id="user-address-phone" class=" ${TodoListView.ITEM_PHONE}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${user.phone}</li>
+        <li id=${user.id}  class=" ${TodoListView.ITEM_ADDRESS}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${user.address.city}</li>
+        <li id=${user.id}  class=" ${TodoListView.ITEM_PHONE}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${user.phone}</li>
         <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
     };
 
@@ -91,6 +92,7 @@ class TodoListView {
         if (!this.isEnter) {
             return;
         };
+        this.id = e.target.id;
         this.isEnter = false;
         this.editUser = this.options.onEdit(e.target.id);
         this.renderEdit(this.editUser);
@@ -100,14 +102,12 @@ class TodoListView {
     onEditSave(e) {
         //console.log('edit name: ', this.editUser.name);
         const name = $('.item').text().split(':')[1];
-        const address = { city: this.editUser.address.city }
-            //  $('.item-address').text().split(':')[1]
+        const address = $('.item-address').text().split(':')[1]
         const phone = $('.item-phone').text().split(': ')[1];
-        this.editUser = { name, address, phone }
-        console.log('edit: ', name.id)
+        const id = this.id;
+        this.editUser = { name, address, phone, id }
         this.isEnter = true;
-        // this.options.onEditSave(this.$ListContainerEl)
-        this.options.onEditSave(this.$ListContainerEl);
+        this.options.onEditSave(this.editUser);
         $(`div.${TodoListView.CONTAINER_INPUT}`).toggleClass(TodoListView.CONTAINER_USER);
     };
 

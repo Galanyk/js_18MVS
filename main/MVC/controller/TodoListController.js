@@ -33,6 +33,7 @@ class TodoListController {
     };
 
     editSave(user) {
+        console.log('controler: ', user);
         this.todoListModel.editSave(user);
         this.todoListView.renderList(this.todoListModel.getTodoListItems());
     };
