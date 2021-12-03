@@ -6,10 +6,10 @@ class TodoListView {
         BUTTON_SAVE: 'button-save',
         BUTTON_SAVE_NEW_USER: 'button-saveNewUser'
     };
-    isEnter = true;
-    newUser = null;
-    editUser = null;
-    id = 0;
+    static ID = {
+        BUTTON_SAVE_ID: '#button-save',
+        USER_NAME_ID: '#button-save',
+    }
 
     static INPUT = 'input'
     static LIST = 'list'
@@ -17,9 +17,15 @@ class TodoListView {
     static ITEM = 'item'
     static ITEM_ADDRESS = 'item-address'
     static ITEM_PHONE = 'item-phone'
-
     static CONTAINER_USER = 'container_user'
     static CONTAINER_USER_OPEN = 'container_user_open'
+
+    editUser = null;
+    id = 0;
+    isEnter = true;
+    newUser = null;
+
+
 
     constructor(options) {
         this.options = options;
@@ -56,15 +62,15 @@ class TodoListView {
     };
 
     createEditHtml(user) {
-        return `<li id=${user.id} class="${TodoListView.ITEM}" contenteditable="true" class=" ${TodoListView.ITEM}">Name:${user.name}</li>
-        <li id=${user.id}  class=" ${TodoListView.ITEM_ADDRESS}" contenteditable="true" class=" ${TodoListView.ITEM}">Address: ${user.address.city}</li>
-        <li id=${user.id}  class=" ${TodoListView.ITEM_PHONE}" contenteditable="true" class=" ${TodoListView.ITEM}">Phone: ${user.phone}</li>
-        <button id="button-save" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
+        return `<li id=${user.id} class="${TodoListView.ITEM}" contenteditable="true">Name:${user.name}</li>
+        <li id=${user.id}  class=" ${TodoListView.ITEM_ADDRESS}" contenteditable="true">Address: ${user.address.city}</li>
+        <li id=${user.id}  class=" ${TodoListView.ITEM_PHONE}" contenteditable="true">Phone: ${user.phone}</li>
+        <button id="${TodoListView.ID.BUTTON_SAVE_ID}" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE}">Save</button>`
     };
 
     createUserCreateContainer($container) {
         const el = $(`<div class="${TodoListView.CONTAINER_INPUT}">
-        <input id="user-name" class="${TodoListView.INPUT}" type="text" placeholder="Name">
+        <input id="user-name" class="${TodoListView.INPUT}" placeholder="Name">
         <button id="button-input" class="${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}">Enter</button></div>`)
             .on('click', `.${TodoListView.BUTTON_CLASS.BUTTON_NEW_USER}`, (e) => this.onEnterClick(e));
         $container.prepend(el);
@@ -72,9 +78,9 @@ class TodoListView {
 
     createNewUserContainer($container) {
         this.newUser = $(`<div class="${TodoListView.CONTAINER_USER_OPEN}"> 
-        <p class="text">Name:</p><input type=text id="new-user-name" class=" ${TodoListView.ITEM}"> 
-        <p class="text">Address:</p><input id="new-user-address" class=" ${TodoListView.ITEM_ADDRESS}">
-        <p class="text">Phone:</p><input id="new-user-phone" class=" ${TodoListView.ITEM_PHONE}"> 
+        <p>Name:</p><input id="new-user-name" class=" ${TodoListView.ITEM}"> 
+        <p>Address:</p><input id="new-user-address" class=" ${TodoListView.ITEM_ADDRESS}">
+        <p>Phone:</p><input id="new-user-phone" class=" ${TodoListView.ITEM_PHONE}"> 
         <button id="button-saveNewUser" class="${TodoListView.BUTTON_CLASS.BUTTON_SAVE_NEW_USER}">Save</button></div>`);
         $($container).prepend(this.newUser);
     };
@@ -98,9 +104,9 @@ class TodoListView {
     };
 
     onEditSave(e) {
-        const name = $('.item').text().split(':')[1];
-        const address = $('.item-address').text().split(':')[1]
-        const phone = $('.item-phone').text().split(': ')[1];
+        const name = $(`.${TodoListView.ITEM}`).text().split(':')[1];
+        const address = $(`.${TodoListView.ITEM_ADDRESS}`).text().split(':')[1]
+        const phone = $(`.${TodoListView.ITEM_PHONE}`).text().split(': ')[1];
         const id = this.id;
         this.editUser = { name, address, phone, id }
         this.isEnter = true;
@@ -115,7 +121,6 @@ class TodoListView {
             $('#user-name').val('');
             this.isEnter = false;
         };
-
     };
 
     onSaveNewUser(e) {
