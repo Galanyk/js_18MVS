@@ -8,7 +8,7 @@ class TodoListView {
     };
     static ID = {
         BUTTON_SAVE_ID: '#button-save',
-        USER_NAME_ID: '#button-save',
+        USER_NAME_ID: '#user-name',
         NEW_USER_NAME_ID: '#new-user-name',
         NEW_USER_ADDRESS_ID: '#new-user-address',
         NEW_USER_PHONE_ID: '#new-user-phone',
@@ -121,7 +121,7 @@ class TodoListView {
         if (this.isEnter && $(TodoListView.INPUT).val().length > 0) {
             this.createNewUserContainer(this.$ListContainerEl);
             $(`${TodoListView.ID.NEW_USER_NAME_ID}`).val($(TodoListView.INPUT).val());
-            $('#user-name').val('');
+            $(`${TodoListView.ID.USER_NAME_ID}`).val('');
             this.isEnter = false;
         };
     };
