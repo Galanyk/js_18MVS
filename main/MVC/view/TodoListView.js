@@ -9,7 +9,9 @@ class TodoListView {
     static ID = {
         BUTTON_SAVE_ID: '#button-save',
         USER_NAME_ID: '#button-save',
-        // NEW_USER_NAME_ID: '#new-user-name'
+        NEW_USER_NAME_ID: '#new-user-name',
+        NEW_USER_ADDRESS_ID: '#new-user-address',
+        NEW_USER_PHONE_ID: '#new-user-phone',
     }
 
     static INPUT = 'input'
@@ -118,19 +120,19 @@ class TodoListView {
     onEnterClick(e) {
         if (this.isEnter && $(TodoListView.INPUT).val().length > 0) {
             this.createNewUserContainer(this.$ListContainerEl);
-            $('#new-user-name').val($(TodoListView.INPUT).val());
+            $(`${TodoListView.ID.NEW_USER_NAME_ID}`).val($(TodoListView.INPUT).val());
             $('#user-name').val('');
             this.isEnter = false;
         };
     };
 
     onSaveNewUser(e) {
-        const name = $('#new-user-name').val();
+        const name = $(`${TodoListView.ID.NEW_USER_NAME_ID}`).val();
         const address = {
-            city: $('#new-user-address').val()
+            city: $(`${TodoListView.ID.NEW_USER_ADDRESS_ID}`).val()
         };
         console.log('Address: ', address.city);
-        const phone = $('#new-user-phone').val();
+        const phone = $(`${TodoListView.ID.NEW_USER_PHONE_ID}`).val();
         this.newUser = { name, address, phone }
         this.options.onAddNewUser(this.newUser);
         this.isEnter = true;
