@@ -9,6 +9,7 @@ class TodoListView {
     static ID = {
         BUTTON_SAVE_ID: '#button-save',
         USER_NAME_ID: '#button-save',
+        // NEW_USER_NAME_ID: '#new-user-name'
     }
 
     static INPUT = 'input'
@@ -115,7 +116,7 @@ class TodoListView {
     };
 
     onEnterClick(e) {
-        if (this.isEnter) {
+        if (this.isEnter && $(TodoListView.INPUT).val().length > 0) {
             this.createNewUserContainer(this.$ListContainerEl);
             $('#new-user-name').val($(TodoListView.INPUT).val());
             $('#user-name').val('');

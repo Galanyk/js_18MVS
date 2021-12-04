@@ -46,7 +46,7 @@ class TodoListModel {
         if (!newUser.name) {
             alert('Incorrect name');
             return;
-        } else if (!newUser.address) {
+        } else if (!newUser.address.city) {
             alert('Incorrect address');
             return;
         } else if (!newUser.phone) {
